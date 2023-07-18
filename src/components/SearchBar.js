@@ -29,6 +29,13 @@ export default function SearchBar() {
         searchJobs()
     }, [searchTerms])
 
+    useEffect(() => {
+        const savedJobs = JSON.parse(localStorage.getItem('dataKey'))
+        if(savedJobs) {
+            setSavedJobs(savedJobs)
+        }
+    }, [])
+
     // function to set the search terms every time input tag is changed
     const handleSearch = (event) => {
         setSearchTerms(event.target.value)
