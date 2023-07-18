@@ -3,9 +3,9 @@
 This project is being used as a place for me to learn API usage in React as well as as a way to search for job openings based on keyword searches. This application uses the Adzuna API to look through job listings and present the user with a list of jobs containing the entered keywords. this project os still
 in development.
 
-## Getting Started with Create React App
+## Getting Application Running on Your Machine
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To run the app, you need to create an account with Adzuna to access their API. Then take your API KEY and API ID and replace "YOUR_API_ID" and "YOUR_API_KEY" in `https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=YOUR_API_ID3&app_key=YOUR+API_KEY&results_per_page=30&what=${searchTerms}' with the API Key and API ID given to you by Adzuna when you sign up on their site. This allows you to fetch data from their job listings API.
 
 ## Run the project with: `npm start`
 
