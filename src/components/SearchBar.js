@@ -9,6 +9,9 @@ export default function SearchBar() {
     const [jobs, setJobs] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
+    // State to hold the data of each saved job
+    const [savedJobs, setSavedJobs] = useState([])
+
     // useEffect to run the keyword search everytime the keywords enetered 
     // into the input tag is changed
     useEffect(() => {
@@ -31,6 +34,24 @@ export default function SearchBar() {
         setSearchTerms(event.target.value)
     }
 
+    // Testing function to see if it saves jobs to local storage
+    const handleSavedData = () => {
+        console.log("Saved jobs: ", savedJobs)
+    }
+
+    // Function to handle adding saved jobs to the saved jobs array
+    // Adds the saved jobs to local storage if box is checked
+    const handleCheckboxChange = (event, job) => {
+        if(event.target.checked) {
+            setSavedJobs(prevSavedJobs => [...prevSavedJobs, job])
+            localStorage.setItem('dataKey', JSON.stringify(savedJobs))
+        } else {
+            setSavedJobs(prevSavedJobs =>
+                    prevSavedJobs.filter(selectedjob => selectedjob.id !== job.id)
+            )
+        }
+    }
+
     // Render component by mapping job id and title to screen when search terms change
     return (
         <>
@@ -40,20 +61,33 @@ export default function SearchBar() {
             <div className="search-bar">
                 <input type="text" value={searchTerms} onChange={handleSearch} placeholder="Enter Jobs Key Terms"/>
             </div> 
-            <div className="save-jobs-btn">
-                <button>Save Jobs</button>
-            </div>
-             <ul className="spaced-list">
+            <ul className="spaced-list">
                 {jobs.map((job) => (
                     <li key={job.id}>
                         <img src={job.logo_url} alt={job.company.display_name}></img>
                         <a href={job.redirect_url} target="_blank" rel="noopener noreferrer">
                             {job.title}
                         </a>
-                        <input type="checkbox"/>
+                        <input 
+                            type="checkbox"
+                            onChange={event => handleCheckboxChange(event, job)}
+                        />
                     </li>
                 ))}
             </ul> 
+            <div>
+                <button onClick={handleSavedData}>Save Selected Jobs</button>
+                <p>Saved Jobs</p>
+                <ul>
+                    {savedJobs.map(job => (
+                        <li key={job.id}>
+                            <a href={job.redirect_url} target="_blank" rel="noopener noreferrer">
+                                {job.title}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     )
 }
