@@ -1,16 +1,11 @@
-import react from 'react'
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import NavBar from './NavBar'
 
-export default function SearchBar() {
+export default function SearchBar({savedJobs, setSavedJobs}) {
     // States to hold the job data frome the Adzuna API and 
     // to hold the keyword search terms as well
     const [jobs, setJobs] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
-
-    // State to hold the data of each saved job
-    const [savedJobs, setSavedJobs] = useState([])
 
     // useEffect to run the keyword search everytime the keywords enetered 
     // into the input tag is changed
@@ -29,12 +24,7 @@ export default function SearchBar() {
         searchJobs()
     }, [searchTerms])
 
-    useEffect(() => {
-        const savedJobs = JSON.parse(localStorage.getItem('dataKey'))
-        if(savedJobs) {
-            setSavedJobs(savedJobs)
-        }
-    }, [])
+
 
     // function to set the search terms every time input tag is changed
     const handleSearch = (event) => {
@@ -83,7 +73,6 @@ export default function SearchBar() {
                 ))}
             </ul> 
             <div>
-                <button onClick={handleSavedData}>Save Selected Jobs</button>
                 <p>Saved Jobs</p>
                 <ul>
                     {savedJobs.map(job => (
