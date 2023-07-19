@@ -7,6 +7,12 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
     const [jobs, setJobs] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
+    // useState for determining minimum salary for job search
+    const [minSalary, setMinSalary] = useState("")
+    
+    // useState for true/false for fulltime checkbox
+    const [fullTime, setFullTime] = useState(1)
+
     // useEffect to run the keyword search everytime the keywords enetered 
     // into the input tag is changed
     useEffect(() => {
@@ -15,30 +21,42 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
         // Set state to the resuliting data from API call
         const searchJobs = async() => {
             try {
-                const response = await axios.get(`https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=079dfac3&app_key=ad4158df54e96a636f983b3a5ce1a300&results_per_page=20&what=${searchTerms}`)
+                const response = await axios.get(`https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=079dfac3&app_key=ad4158df54e96a636f983b3a5ce1a300&results_per_page=30&what=${searchTerms}&full_time=${fullTime}`)
                 setJobs(response.data.results)
-            } catch(error){
+            } catch(error) {
                 console.error(error)
             }
         }
         searchJobs()
-    }, [searchTerms])
+    }, [searchTerms, minSalary])
 
-
-
-    // function to set the search terms every time input tag is changed
+    // Function to set the search terms every time input tag is changed
     const handleSearch = (event) => {
         setSearchTerms(event.target.value)
     }
 
-    // Testing function to see if it saves jobs to local storage
+    // Function to set minimum salary search terms as input is changed
+    const handleMinSalary = (event) => {
+        setMinSalary(event.target.value)
+    }
+
+    // Change fullTime btwn 1 (false) and 0 (true) accorindg to adzuna API docs
+    const handleFullTimeChange = () => {
+        if(fullTime === 1) {
+            setFullTime(0)
+        }else if(fullTime === 0){
+            setFullTime(1)
+        }
+    }
+
+/*     // Testing function to see if it saves jobs to local storage
     const handleSavedData = () => {
         console.log("Saved jobs: ", savedJobs)
-    }
+    } */
 
     // Function to handle adding saved jobs to the saved jobs array
     // Adds the saved jobs to local storage if box is checked
-    const handleCheckboxChange = (event, job) => {
+    const handleAddJob = (event, job) => {
         if(event.target.checked) {
             setSavedJobs(prevSavedJobs => [...prevSavedJobs, job])
             localStorage.setItem('dataKey', JSON.stringify(savedJobs))
@@ -58,6 +76,18 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
             <div className="search-bar">
                 <input type="text" value={searchTerms} onChange={handleSearch} placeholder="Enter Jobs Key Terms"/>
             </div> 
+            <br/>
+            <div className="search-bar">
+                <input type="text" value={minSalary} onChange={handleMinSalary} placeholder="Enter Salary Minimum"/>
+            </div> 
+            <div>
+                <input 
+                    type="checkbox" 
+                    id="fulltime"
+                    onChange={handleFullTimeChange}
+                />
+                <label for="fulltime">Fulltime</label>
+            </div>
             <ul className="spaced-list">
                 {jobs.map((job) => (
                     <li key={job.id}>
@@ -65,25 +95,14 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
                         <a href={job.redirect_url} target="_blank" rel="noopener noreferrer">
                             {job.title}
                         </a>
+                        <p>{job.description}</p>
                         <input 
                             type="checkbox"
-                            onChange={event => handleCheckboxChange(event, job)}
+                            onChange={event => handleAddJob(event, job)}
                         />
                     </li>
                 ))}
             </ul> 
-            <div>
-                <p>Saved Jobs</p>
-                <ul>
-                    {savedJobs.map(job => (
-                        <li key={job.id}>
-                            <a href={job.redirect_url} target="_blank" rel="noopener noreferrer">
-                                {job.title}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
         </>
     )
 }

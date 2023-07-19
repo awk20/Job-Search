@@ -20,19 +20,20 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-/*   height: 50vh; */
 }
 
 .spaced-list li {
   background-color: #f2f2f2;
   padding: 20px;
   margin: 10px;
+  width: 75%;
 }
 
 .title-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 29px;
 }
 
 .title {
