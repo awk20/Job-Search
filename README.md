@@ -1,7 +1,7 @@
 # Job Search Application
 
-This project is being used as a place for me to learn API usage in React as well as as a way to search for job openings based on keyword searches. This application uses the Adzuna API to look through job listings and present the user with a list of jobs containing the entered keywords. this project os still
-in development.
+This project is being used as a place for me to learn API usage in React as well as as a way to search for job openings based on keyword searches. This application uses the Adzuna API to look through job listings and present the user with a list of jobs containing the entered keywords. Click the green text on each job listing to reach the site it is located at. Can now also set jobs to parttime and fulltime as well as search based on a minimum slaary requirement.
+this project is still in development.
 
 ## Getting Application Running on Your Machine
 

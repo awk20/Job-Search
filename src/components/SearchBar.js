@@ -87,6 +87,13 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
             <div className="title-container">
                 <h1 className="title">Job Listings</h1>
             </div>
+            <div>
+                <p className="app-desc">
+                    Welcome to the Job listing site. Enter keywords for the jobs you wish to see
+                    and click the checbox on each job to save them on the saved jobs page on the
+                    navigation bar. 
+                </p>
+            </div>
             <div className="search-bar">
                 <input type="text" value={searchTerms} onChange={handleSearchChange} placeholder="Enter Jobs Key Terms"/>
             </div> 
@@ -105,11 +112,11 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
             <ul className="spaced-list">
                 {jobs.map((job) => (
                     <li key={job.id}>
-                        <img src={job.logo_url} alt={job.company.display_name}></img>
+                        {/* <img src={job.logo_url} alt={job.company.display_name}></img> */}
                         <a href={job.redirect_url} target="_blank" rel="noopener noreferrer">
                             {job.title}
                         </a>
-                        <p>{job.description}</p>
+                        <p className="desc-p">{job.description}</p>
                         <input 
                             type="checkbox"
                             onChange={event => handleAddJob(event, job)}
