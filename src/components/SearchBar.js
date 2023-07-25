@@ -11,7 +11,15 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
     const [minSalary, setMinSalary] = useState("")
     
     // useState for true/false for fulltime checkbox
-    const [fullTime, setFullTime] = useState(1)
+    const [fullTime, setFullTime] = useState(true)
+
+    // Const variables for the url and key
+    const apiUrl = "https://api.adzuna.com/v1/api/jobs/us/search/1"
+    const apiKey = "ad4158df54e96a636f983b3a5ce1a300"
+    const appId = "079dfac3"
+
+    // Goes inside of acios.get()
+    // `https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=079dfac3&app_key=ad4158df54e96a636f983b3a5ce1a300&results_per_page=30&what=${searchTerms}&full_time=${fullTime}&sort_by=salary&salary_min=${minSalary}`
 
     // useEffect to run the keyword search everytime the keywords enetered 
     // into the input tag is changed
@@ -21,32 +29,38 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
         // Set state to the resuliting data from API call
         const searchJobs = async() => {
             try {
-                const response = await axios.get(`https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=079dfac3&app_key=ad4158df54e96a636f983b3a5ce1a300&results_per_page=30&what=${searchTerms}&full_time=${fullTime}`)
+                const response = await axios.get(`https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=079dfac3&app_key=ad4158df54e96a636f983b3a5ce1a300&results_per_page=30&what=${searchTerms}&where=us&full_time=${fullTime}`)
+                    /* apiUrl, {
+                    params: {
+                        app_id: appId,
+                        app_key: apiKey,
+                        results_per_page: 30,
+                        what: searchTerms,
+                        salary_min: minSalary
+                    }
+                })*/
                 setJobs(response.data.results)
             } catch(error) {
                 console.error(error)
             }
         }
         searchJobs()
-    }, [searchTerms, minSalary])
+    }, [searchTerms, minSalary, fullTime])
 
     // Function to set the search terms every time input tag is changed
-    const handleSearch = (event) => {
+    const handleSearchChange = (event) => {
         setSearchTerms(event.target.value)
     }
 
     // Function to set minimum salary search terms as input is changed
-    const handleMinSalary = (event) => {
+    const handleMinSalaryChange = (event) => {
         setMinSalary(event.target.value)
     }
 
     // Change fullTime btwn 1 (false) and 0 (true) accorindg to adzuna API docs
-    const handleFullTimeChange = () => {
-        if(fullTime === 1) {
-            setFullTime(0)
-        }else if(fullTime === 0){
-            setFullTime(1)
-        }
+    const handleFullTimeChange = (event) => {
+        setFullTime(!fullTime)
+        console.log(fullTime)
     }
 
 /*     // Testing function to see if it saves jobs to local storage
@@ -74,19 +88,19 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
                 <h1 className="title">Job Listings</h1>
             </div>
             <div className="search-bar">
-                <input type="text" value={searchTerms} onChange={handleSearch} placeholder="Enter Jobs Key Terms"/>
+                <input type="text" value={searchTerms} onChange={handleSearchChange} placeholder="Enter Jobs Key Terms"/>
             </div> 
             <br/>
             <div className="search-bar">
-                <input type="text" value={minSalary} onChange={handleMinSalary} placeholder="Enter Salary Minimum"/>
+                <input type="text" value={minSalary} onChange={handleMinSalaryChange} placeholder="Enter Salary Minimum"/>
             </div> 
-            <div>
+            <div className="full-time-btn">
                 <input 
                     type="checkbox" 
                     id="fulltime"
                     onChange={handleFullTimeChange}
                 />
-                <label for="fulltime">Fulltime</label>
+                <label for="fulltime">{fullTime ? 'Full-time' : 'Part-time'}</label>
             </div>
             <ul className="spaced-list">
                 {jobs.map((job) => (

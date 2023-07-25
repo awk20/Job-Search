@@ -76,3 +76,10 @@ code {
   color: #333;
   float: left;
 }
+
+.full-time-btn {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10px;
+}
