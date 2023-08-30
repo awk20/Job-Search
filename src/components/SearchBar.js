@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react'
 import axios from "axios"
 
 export default function SearchBar({savedJobs, setSavedJobs}) {
+    // useState for fading in of text
+    const [fadeIn, setFadeIn] = useState(false)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setFadeIn(true)
+        }, 100)
+    }, []);
+
     // States to hold the job data frome the Adzuna API and 
     // to hold the keyword search terms as well
     const [jobs, setJobs] = useState([])
@@ -104,7 +113,7 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
     // Render component by mapping job id and title to screen when search terms change
     return (
         <>
-            <div className="title-container">
+            <div className={`title-container ${fadeIn ? 'fadeIn' : ''}`}>
                 <h1 className="title">Job Listings</h1>
             </div>
             <div>
@@ -139,7 +148,7 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
                     class="sc-gJwTLC ikxBAC"
                     onChange={handleFullTimeChange}
                 />
-                <label for="fulltime">{fullTime ? '   Full-time' : '   Part-time'}</label>
+                <label className="full-time"for="fulltime">{fullTime ? '   Full-time' : '   Part-time'}</label>
             </div>
             <ul className="spaced-list">
                 {jobs.map((job) => (
@@ -152,6 +161,9 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
                             type="checkbox"
                             onChange={event => handleAddJob(event, job)}
                         />
+                        <p className="checkbox-desc">
+                            Check Box to Save Job
+                        </p>
                     </li>
                 ))}
             </ul> 

@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: 'Familjen Grotesk', sans-serif;
+  /* font-family: Inter, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(to right, #9600FF, #AEBAF8);
@@ -37,9 +38,21 @@ code {
   padding-top: 29px;
 }
 
+@key-frames fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .title {
   text-align: center;
   color: white;
+  animation: fadeIn 5s ease-in-out;
+  margin-top: 40px;
+  font-size: 40px;
 }
 
 .search-bar {
@@ -127,6 +140,7 @@ a {
 
 .desc-p{
   color: #aebaf8;
+  
 }
 
 .state-choices{
@@ -137,6 +151,26 @@ a {
   transition: box-shadow 0.3s ease;
   border-bottom: 2px solid #333;
   font-weight: bold;
+}
+
+.state-choices:focus{
+  outline: none;
+  border-color: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, .0.25);
+}
+
+.full-time{
+  font-weight: bold;
+}
+
+.checkbox-container input[type="checkbox"]{
+  color:#6e79d6;
+}
+
+.checkbox-desc{
+  color:#AEBAF8;
+  margin-left: 35px;
+  margin-top: -20px;
 }
 
 .checkbox-wrapper-2 {
