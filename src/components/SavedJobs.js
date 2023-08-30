@@ -13,7 +13,7 @@ export default function SavedJobs({ savedJobs, setSavedJobs}) {
                             <a href={job.redirect_url} target="_blank" rel="noopener noreferrer">
                                 {job.title}
                             </a>
-                            <p>{job.description}</p>
+                            <p className="desc-p">{job.description}</p>
                         </li>
                     ))}
                 </ul>
