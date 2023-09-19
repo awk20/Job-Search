@@ -105,7 +105,7 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
             localStorage.setItem('dataKey', JSON.stringify(savedJobs))
         } else {
             setSavedJobs(prevSavedJobs =>
-                    prevSavedJobs.filter(selectedjob => selectedjob.id !== job.id)
+                    prevSavedJobs.filter(selectedJob => selectedJob.id !== job.id)
             )
         }
     }
@@ -114,11 +114,11 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
     return (
         <>
             <div className={`title-container ${fadeIn ? 'fadeIn' : ''}`}>
-                <h1 className="title">Job Listings</h1>
+                <h1 className="title">Find Me Jobs</h1>
             </div>
             <div>
                 <p className="app-desc">
-                    Welcome to the Job listing site. Enter keywords for the jobs you wish to see
+                    Welcome to Find me Jobs. Enter keywords for the jobs you wish to see
                     and click the checbox on each job to save them on the saved jobs page on the
                     navigation bar. Click the job listing title to be directed to the page with the
                     desired job listing
