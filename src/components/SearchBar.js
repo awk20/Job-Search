@@ -2,14 +2,6 @@ import { useState, useEffect } from 'react'
 import axios from "axios"
 
 export default function SearchBar({savedJobs, setSavedJobs}) {
-    // useState for fading in of text
-    const [fadeIn, setFadeIn] = useState(false)
-
-    useEffect(() => {
-        setTimeout(() => {
-            setFadeIn(true)
-        }, 100)
-    }, []);
 
     // States to hold the job data frome the Adzuna API and 
     // to hold the keyword search terms as well
@@ -38,9 +30,6 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
     const [stateSelected, setStateSelected] = useState('');
 
     // Const variables for the url and key
-    const apiUrl = "https://api.adzuna.com/v1/api/jobs/us/search/1"
-    const apiKey = "ad4158df54e96a636f983b3a5ce1a300"
-    const appId = "079dfac3"
 
     // Goes inside of axios.get()
     // `https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=079dfac3&app_key=ad4158df54e96a636f983b3a5ce1a300&results_per_page=30&what=${searchTerms}&full_time=${fullTime}&sort_by=salary&salary_min=${minSalary}`
@@ -69,7 +58,7 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
             }
         }
         searchJobs()
-    }, [searchTerms, minSalary, fullTime])
+    }, [searchTerms, minSalary, fullTime, stateSelected])
 
     // Function to set the search terms every time input tag is changed
     const handleSearchChange = (event) => {
@@ -113,9 +102,7 @@ export default function SearchBar({savedJobs, setSavedJobs}) {
     // Render component by mapping job id and title to screen when search terms change
     return (
         <>
-            <div className={`title-container ${fadeIn ? 'fadeIn' : ''}`}>
                 <h1 className="title">Find Me Jobs</h1>
-            </div>
             <div>
                 <p className="app-desc">
                     Welcome to Find me Jobs. Enter keywords for the jobs you wish to see
